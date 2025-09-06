@@ -6,4 +6,4 @@ router = APIRouter(prefix="/aiagent", tags=["AI Agent"])
 
 @router.post("/prompt", response_model=ResponseModel)
 async def ai_agent(prompt: PromptModel):
-    return await AiAgentService.ai_agent(prompt)
+    return await AiAgentService.ai_agent_v2(prompt)

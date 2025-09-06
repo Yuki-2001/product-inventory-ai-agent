@@ -57,4 +57,42 @@ class ProductRepository:
         del product["_id"]
         return product
         
+    @staticmethod
+    async def dynamic_query(filters: list):
 
+        query = {}
+        sort = None
+        limit = None
+
+        for f in filters:
+            field = f.get("field")
+            operator = f.get("operator")
+            value = f.get("value")
+
+            # handle special operators
+            if operator == "all":
+                return await collection().find({}).to_list(length=100)
+
+            if operator in ["max", "min"]:
+                sort_order = -1 if operator == "max" else 1
+                return await collection().find_one(sort=[(field, sort_order)])
+
+            # build query for standard operators
+            if operator == "=":
+                if field == "_id":
+                    query["_id"] = ObjectId(value)
+                else:
+                    query[field] = value
+
+            elif operator == "contains":
+                query[field] = {"$regex": value, "$options": "i"}
+
+            elif operator in [">", "<", ">=", "<="]:
+                mongo_op = {
+                    ">": "$gt", "<": "$lt",
+                    ">=": "$gte", "<=": "$lte"
+                }[operator]
+                query[field] = {mongo_op: value}
+
+        results = await collection().find(query).to_list(length=100)
+        return results

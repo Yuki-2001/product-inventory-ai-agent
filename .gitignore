@@ -72,7 +72,7 @@ pyrightconfig.json
 .idea/
 
 # Local .env files
-# .env
+.env
 .env.*
 
 # SQLite DB files

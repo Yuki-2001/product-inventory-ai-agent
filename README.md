@@ -65,11 +65,11 @@ This provides an interactive API explorer for testing all endpoints.
 
 1. **Product Inventory APIs**
 
-Add product
-Get all products
-Get product by ID
-Get most expensive product
-Calculate total inventory value
+- Add product
+- Get all products
+- Get product by ID
+- Get most expensive product
+- Calculate total inventory value
 
 2. **AI Agent Integration**
 

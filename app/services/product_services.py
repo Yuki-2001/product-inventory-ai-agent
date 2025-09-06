@@ -9,7 +9,7 @@ class ProductService:
     
     @staticmethod
     async def create_product(product):
-        same_product= ProductRepository.get_probuct_by_name(product.name)
+        same_product= await ProductRepository.get_probuct_by_name(product.name)
         if same_product:
             raise HTTPException(status_code=400, detail="Product with this name already exists")
         return await ProductRepository.save_product(product)
